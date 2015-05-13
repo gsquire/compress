@@ -1,0 +1,12 @@
+[package]
+name = "compress"
+version = "0.1.0"
+authors = ["Garrett Squire <garrettsquire@gmail.com>"]
+
+[dependencies.iron]
+
+version = "*"
+
+[dependencies]
+
+flate2 = "0.2"
