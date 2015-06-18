@@ -11,7 +11,7 @@ use flate2::read::{DeflateEncoder, GzEncoder};
 use iron::{AfterMiddleware, IronResult, IronError, Request, Response};
 use iron::headers::{AcceptEncoding, ContentEncoding, Encoding};
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, PartialOrd)]
 pub enum Type {
     Deflate,
     Gzip
@@ -30,8 +30,22 @@ impl Compressor {
 
 impl AfterMiddleware for Compressor {
     fn after(&self, req: &mut Request, mut res: Response) -> IronResult<(Response)> {
-        if !req.headers.has::<AcceptEncoding>() {
-            return Ok(res);
+        let encodings = req.headers.get::<AcceptEncoding>();
+        let can_encode: bool = false;
+        match encodings {
+            None => { return Ok(res); }
+            Some(encodings) => {
+                for enc in encodings.iter() {
+                    if enc.item == Encoding::Gzip && self.engine == Type::Gzip
+                        || enc.item == Encoding::Deflate && self.engine == Type::Deflate {
+                            can_encode = true;
+                            break;
+                    }
+                }
+                if !can_encode {
+                    return Ok(res);
+                }
+            }
         }
 
         let mut ce_opts = Vec::new();
