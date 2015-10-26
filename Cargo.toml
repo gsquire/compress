@@ -9,4 +9,4 @@ version = "*"
 
 [dependencies]
 
-flate2 = "0.2.7"
+flate2 = "0.2"

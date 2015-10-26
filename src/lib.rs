@@ -3,10 +3,10 @@
 extern crate flate2;
 extern crate iron;
 
-use std::io::Read;
+use std::io::Write;
 
 use flate2::Compression;
-use flate2::read::{DeflateEncoder, GzEncoder};
+use flate2::write::{DeflateEncoder, GzEncoder};
 
 use iron::{AfterMiddleware, IronResult, IronError, Request, Response};
 use iron::headers::{AcceptEncoding, ContentEncoding, Encoding};
@@ -29,9 +29,9 @@ impl Compressor {
 }
 
 impl AfterMiddleware for Compressor {
-    fn after(&self, req: &mut Request, mut res: Response) -> IronResult<(Response)> {
+    fn after(&self, req: &mut Request, mut res: Response) -> IronResult<Response> {
         let encodings = req.headers.get::<AcceptEncoding>();
-        let can_encode: bool = false;
+        let mut can_encode: bool = false;
         match encodings {
             None => { return Ok(res); }
             Some(encodings) => {
@@ -54,12 +54,20 @@ impl AfterMiddleware for Compressor {
             Type::Deflate => {
                 ce_opts.push(Encoding::Deflate);
                 res.headers.set(ContentEncoding(ce_opts));
-                res.body = Some(Box::new(DeflateEncoder::new(res.body.unwrap(), Compression::Best)));
+
+                let mut def_enc = DeflateEncoder::new(vec![], Compression::Best);
+                let _ = def_enc.write(b"how do i read the body?");
+                let bytes = def_enc.finish().unwrap();
+                res.body = Some(Box::new(bytes));
             },
             Type::Gzip => {
                 ce_opts.push(Encoding::Gzip);
                 res.headers.set(ContentEncoding(ce_opts));
-                res.body = Some(Box::new(GzEncoder::new(res.body.unwrap(), Compression::Best)));
+
+                let mut gz_enc = GzEncoder::new(vec![], Compression::Best);
+                let _ = gz_enc.write(b"how do i read the body?");
+                let bytes = gz_enc.finish().unwrap();
+                res.body = Some(Box::new(bytes));
             }
         }
 
