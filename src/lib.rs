@@ -3,7 +3,7 @@
 extern crate flate2;
 extern crate iron;
 
-use std::io::Write;
+use std::io::{Read, Write};
 
 use flate2::Compression;
 use flate2::write::{DeflateEncoder, GzEncoder};
@@ -49,6 +49,8 @@ impl AfterMiddleware for Compressor {
         }
 
         let mut ce_opts = Vec::new();
+        let mut req_body = Vec::new();
+        let _ = req.body.read_to_end(&mut req_body);
 
         match self.engine {
             Type::Deflate => {
@@ -56,7 +58,7 @@ impl AfterMiddleware for Compressor {
                 res.headers.set(ContentEncoding(ce_opts));
 
                 let mut def_enc = DeflateEncoder::new(vec![], Compression::Best);
-                let _ = def_enc.write(b"how do i read the body?");
+                let _ = def_enc.write(&req_body[..]);
                 let bytes = def_enc.finish().unwrap();
                 res.body = Some(Box::new(bytes));
             },
@@ -65,7 +67,7 @@ impl AfterMiddleware for Compressor {
                 res.headers.set(ContentEncoding(ce_opts));
 
                 let mut gz_enc = GzEncoder::new(vec![], Compression::Best);
-                let _ = gz_enc.write(b"how do i read the body?");
+                let _ = gz_enc.write(&req_body[..]);
                 let bytes = gz_enc.finish().unwrap();
                 res.body = Some(Box::new(bytes));
             }
