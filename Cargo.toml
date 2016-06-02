@@ -1,12 +1,10 @@
 [package]
-name = "compress"
+name = "iron_compress"
 version = "0.1.0"
 authors = ["Garrett Squire <garrettsquire@gmail.com>"]
-
-[dependencies.iron]
-
-version = "*"
+keywords = ["iron", "hyper", "http"]
 
 [dependencies]
-
 flate2 = "0.2"
+iron = "0.3"
+modifier = "0.1"
