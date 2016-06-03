@@ -2,7 +2,10 @@
 name = "iron_compress"
 version = "0.1.0"
 authors = ["Garrett Squire <garrettsquire@gmail.com>"]
+description = "A modifier for Iron that can compress response bodies"
+repository = "https://github.com/gsquire/compress"
 keywords = ["iron", "hyper", "http"]
+license = "MIT"
 
 [dependencies]
 flate2 = "0.2"
