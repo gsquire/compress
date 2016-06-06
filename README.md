@@ -2,6 +2,9 @@
 This small library exposes two types that know how to encode bytes based on the GZIP and deflate
 algorithms. The types implement the modifier trait so they can be used in an Iron Response.
 
+### Documentation
+Find it [here](https://gsquire.github.io/doc/iron_compress/iron_compress).
+
 ### Example
 ```rust
 extern crate iron;

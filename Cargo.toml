@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Garrett Squire <garrettsquire@gmail.com>"]
 description = "A modifier for Iron that can compress response bodies"
 repository = "https://github.com/gsquire/compress"
+documentation = "https://gsquire.github.io/doc/iron_compress/iron_compress"
 keywords = ["iron", "hyper", "http"]
 license = "MIT"
 
