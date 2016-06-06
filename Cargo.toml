@@ -10,4 +10,3 @@ license = "MIT"
 [dependencies]
 flate2 = "0.2"
 iron = "0.3"
-modifier = "0.1"

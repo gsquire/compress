@@ -1,10 +1,8 @@
 /// Compression modifier for Iron. This simple crate lets you pass bytes to a response such
 /// that they can be encoded by either GZIP or deflate algorithms. The modifiers also set the
 /// proper content encoding header.
-
 extern crate flate2;
 extern crate iron;
-extern crate modifier;
 
 use std::io::Write;
 
@@ -13,8 +11,7 @@ use flate2::write::{DeflateEncoder, GzEncoder};
 
 use iron::Response;
 use iron::headers::{ContentEncoding, Encoding};
-
-use modifier::Modifier;
+use iron::modifier::Modifier;
 
 /// A type that knows how to encode a stream of bytes with the deflate algorithm.
 pub struct DeflateWriter<'a>(pub &'a [u8]);
