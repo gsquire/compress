@@ -1,4 +1,6 @@
 # compress
+[![Build Status](https://travis-ci.org/gsquire/compress.svg?branch=master)](https://travis-ci.org/gsquire/compress)
+
 This small library exposes two types that know how to encode bytes based on the GZIP and deflate
 algorithms. The types implement the modifier trait so they can be used in an Iron Response.
 
