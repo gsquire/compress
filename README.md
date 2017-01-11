@@ -5,7 +5,7 @@ This small library exposes two types that know how to encode bytes based on the 
 algorithms. The types implement the modifier trait so they can be used in an Iron Response.
 
 ### Documentation
-Find it [here](https://gsquire.github.io/doc/iron_compress/iron_compress).
+Find it [here](https://docs.rs/iron_compress)
 
 ### Example
 ```rust
